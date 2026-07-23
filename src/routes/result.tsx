@@ -9,6 +9,7 @@ import { TopBar } from "../components/TopBar";
 import { useQuiz } from "../context/QuizContext";
 import { scoreAnswers } from "../data/scoring";
 import { saveSubmission } from "../lib/firebase";
+import { getVideoUrlForVerdict } from "../lib/videoAssets";
 
 export const Route = createFileRoute("/result")({
   head: () => ({ meta: [{ title: "The Verdict — R/G Detector" }] }),
@@ -36,6 +37,16 @@ function ResultPage() {
   const isGreen = result.verdict === "GREEN FLAG";
   const isYellow = result.verdict === "YELLOW FLAG";
   const isRed = result.verdict === "RED FLAG";
+
+  const videoSrc = useMemo(() => getVideoUrlForVerdict(result.verdict), [result.verdict]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [videoSrc]);
 
   const hasSavedRef = useRef(false);
   const [savedToDb, setSavedToDb] = useState(false);
@@ -90,11 +101,33 @@ function ResultPage() {
           >
             {result.verdict}
           </h1>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="relative mt-6 overflow-hidden rounded-3xl border border-white/15 bg-black/40 p-1.5 backdrop-blur-xl shadow-2xl"
+            style={{ boxShadow: `0 20px 50px -10px ${color}40` }}
+          >
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              preload="auto"
+              aria-label={`Verdict video for ${result.verdict}`}
+              className="mx-auto max-h-72 w-full max-w-sm rounded-2xl object-cover md:max-h-80 md:max-w-md"
+            />
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="mt-4 flex items-baseline gap-2"
+            className="mt-6 flex items-baseline gap-2"
           >
             <span className="text-6xl font-bold text-white md:text-7xl">
               <AnimatedCounter value={result.percent} />%

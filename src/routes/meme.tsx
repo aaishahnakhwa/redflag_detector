@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import { AlertTriangle, ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { FlagFlash } from "../components/FlagFlash";
 import { GlassButton } from "../components/GlassButton";
 import { GlassCard } from "../components/GlassCard";
@@ -11,9 +11,7 @@ import { TopBar } from "../components/TopBar";
 import { useQuiz } from "../context/QuizContext";
 import { greenMeme, redMeme, yellowMeme } from "../data/memes";
 import { scoreAnswers } from "../data/scoring";
-import greenVideo from "../assets/green.mp4.asset.json";
-import redVideo from "../assets/red.mp4.asset.json";
-import yellowVideo from "../assets/yellow.mp4.asset.json";
+import { getVideoUrlForVerdict } from "../lib/videoAssets";
 
 export const Route = createFileRoute("/meme")({
   head: () => ({ meta: [{ title: "The Meme — R/G Detector" }] }),
@@ -29,6 +27,16 @@ function MemePage() {
   const yellow = verdict === "YELLOW FLAG";
   const red = verdict === "RED FLAG";
   const color = green ? "#58F29D" : yellow ? "#FFD25A" : "#FF5A6E";
+
+  const videoSrc = useMemo(() => getVideoUrlForVerdict(verdict), [verdict]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [videoSrc]);
 
   useEffect(() => {
     if (Object.keys(state.answers).length === 0) navigate({ to: "/" });
@@ -48,7 +56,6 @@ function MemePage() {
   }, [green]);
 
   const meme = green ? greenMeme : yellow ? yellowMeme : redMeme;
-  const videoSrc = green ? greenVideo.url : yellow ? yellowVideo.url : redVideo.url;
 
   return (
     <PageShell>
@@ -96,12 +103,14 @@ function MemePage() {
             </h1>
 
             <motion.video
+              ref={videoRef}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
               src={videoSrc}
               autoPlay
               loop
+              muted
               playsInline
               controls
               preload="auto"
