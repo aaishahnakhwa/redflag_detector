@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalysisRouteImport } from './routes/analysis'
-import { Route as MemeRouteImport } from './routes/meme'
 import { Route as MissionRouteImport } from './routes/mission'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as ReportRouteImport } from './routes/report'
@@ -27,11 +26,6 @@ const IndexRoute = IndexRouteImport.update({
 const AnalysisRoute = AnalysisRouteImport.update({
   id: '/analysis',
   path: '/analysis',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MemeRoute = MemeRouteImport.update({
-  id: '/meme',
-  path: '/meme',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MissionRoute = MissionRouteImport.update({
@@ -68,7 +62,6 @@ const UserInfoRoute = UserInfoRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
-  '/meme': typeof MemeRoute
   '/mission': typeof MissionRoute
   '/quiz': typeof QuizRoute
   '/report': typeof ReportRoute
@@ -79,7 +72,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
-  '/meme': typeof MemeRoute
   '/mission': typeof MissionRoute
   '/quiz': typeof QuizRoute
   '/report': typeof ReportRoute
@@ -91,7 +83,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
-  '/meme': typeof MemeRoute
   '/mission': typeof MissionRoute
   '/quiz': typeof QuizRoute
   '/report': typeof ReportRoute
@@ -104,7 +95,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/analysis'
-    | '/meme'
     | '/mission'
     | '/quiz'
     | '/report'
@@ -115,7 +105,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/analysis'
-    | '/meme'
     | '/mission'
     | '/quiz'
     | '/report'
@@ -126,7 +115,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/analysis'
-    | '/meme'
     | '/mission'
     | '/quiz'
     | '/report'
@@ -138,7 +126,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalysisRoute: typeof AnalysisRoute
-  MemeRoute: typeof MemeRoute
   MissionRoute: typeof MissionRoute
   QuizRoute: typeof QuizRoute
   ReportRoute: typeof ReportRoute
@@ -161,13 +148,6 @@ declare module '@tanstack/react-router' {
       path: '/analysis'
       fullPath: '/analysis'
       preLoaderRoute: typeof AnalysisRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/meme': {
-      id: '/meme'
-      path: '/meme'
-      fullPath: '/meme'
-      preLoaderRoute: typeof MemeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mission': {
@@ -218,7 +198,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalysisRoute: AnalysisRoute,
-  MemeRoute: MemeRoute,
   MissionRoute: MissionRoute,
   QuizRoute: QuizRoute,
   ReportRoute: ReportRoute,

@@ -114,9 +114,9 @@ function ReportPage() {
               </div>
             </GlassCard>
 
-            <Link to="/meme" className="block">
+            <Link to="/share" className="block">
               <GlassButton className="w-full" size="lg" variant={result.verdict === "RED FLAG" ? "danger" : "primary"}>
-                See the verdict meme <ArrowRight className="h-4 w-4" />
+                Generate share card <ArrowRight className="h-4 w-4" />
               </GlassButton>
             </Link>
           </div>
