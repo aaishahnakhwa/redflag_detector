@@ -1,19 +1,14 @@
-import greenVideoJson from "../assets/green.mp4.asset.json";
-import redVideoJson from "../assets/red.mp4.asset.json";
-import yellowVideoJson from "../assets/yellow.mp4.asset.json";
+export const GREEN_IFRAME_URL = "https://drive.google.com/file/d/1cqym3-egHRsFQf2xTRIE-vae-7b0U7yB/preview";
+export const RED_IFRAME_URL = "https://drive.google.com/file/d/1Nf5nUKXyeftKOlkvptuCbxswcR1i0aGk/preview";
+export const YELLOW_IFRAME_URL = "https://drive.google.com/file/d/1DC0bKIUOtH0FDWdxi-iMsbuD9kMtUs4m/preview";
 
-import greenMp4 from "../assets/green.mp4";
-import redMp4 from "../assets/red.mp4";
-import yellowMp4 from "../assets/yellow.mp4";
+export function getVideoIframeForVerdict(verdict: string): string {
+  if (verdict === "GREEN FLAG") return GREEN_IFRAME_URL;
+  if (verdict === "YELLOW FLAG") return YELLOW_IFRAME_URL;
+  return RED_IFRAME_URL;
+}
 
-// Vite asset imports return the URL path for local dev/prod build.
-// If running in a hosted environment where asset.json has a valid URL, fallback gracefully.
-export const greenVideoUrl = greenMp4 || greenVideoJson.url || "/assets/green.mp4";
-export const redVideoUrl = redMp4 || redVideoJson.url || "/assets/red.mp4";
-export const yellowVideoUrl = yellowMp4 || yellowVideoJson.url || "/assets/yellow.mp4";
-
+// Retain legacy helper for backwards compatibility
 export function getVideoUrlForVerdict(verdict: string): string {
-  if (verdict === "GREEN FLAG") return greenVideoUrl;
-  if (verdict === "YELLOW FLAG") return yellowVideoUrl;
-  return redVideoUrl;
+  return getVideoIframeForVerdict(verdict);
 }

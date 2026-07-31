@@ -29,14 +29,6 @@ function MemePage() {
   const color = green ? "#58F29D" : yellow ? "#FFD25A" : "#FF5A6E";
 
   const videoSrc = useMemo(() => getVideoUrlForVerdict(verdict), [verdict]);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(() => {});
-    }
-  }, [videoSrc]);
 
   useEffect(() => {
     if (Object.keys(state.answers).length === 0) navigate({ to: "/" });
@@ -102,21 +94,20 @@ function MemePage() {
               {meme.headline}
             </h1>
 
-            <motion.video
-              ref={videoRef}
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              src={videoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              controls
-              preload="auto"
-              aria-label={meme.headline}
-              className="mx-auto mt-8 max-h-80 w-full max-w-lg rounded-3xl border border-white/10 object-cover"
-            />
+              className="relative mx-auto mt-8 aspect-video w-full max-w-lg overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-1 backdrop-blur-xl shadow-2xl"
+            >
+              <iframe
+                src={videoSrc}
+                title={meme.headline}
+                className="h-full w-full rounded-2xl border-0"
+                allow="autoplay"
+                allowFullScreen
+              />
+            </motion.div>
 
             <div className="mt-8 space-y-2">
               {meme.captions.map((c, i) => (
