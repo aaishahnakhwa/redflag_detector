@@ -30,9 +30,6 @@ function MemePage() {
 
   const videoSrc = useMemo(() => getVideoUrlForVerdict(verdict), [verdict]);
 
-  useEffect(() => {
-    if (Object.keys(state.answers).length === 0) navigate({ to: "/" });
-  }, [state.answers, navigate]);
 
   useEffect(() => {
     if (!green) return;

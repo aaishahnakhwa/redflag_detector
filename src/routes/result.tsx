@@ -9,6 +9,7 @@ import { TopBar } from "../components/TopBar";
 import { useQuiz } from "../context/QuizContext";
 import { scoreAnswers } from "../data/scoring";
 import { saveSubmission } from "../lib/firebase";
+import { getVideoUrlForVerdict } from "../lib/videoAssets";
 
 export const Route = createFileRoute("/result")({
   head: () => ({ meta: [{ title: "The Verdict — R/G Detector" }] }),
@@ -42,7 +43,6 @@ function ResultPage() {
 
   useEffect(() => {
     if (Object.keys(state.answers).length === 0) {
-      navigate({ to: "/" });
       return;
     }
 
@@ -90,6 +90,19 @@ function ResultPage() {
           >
             {result.verdict}
           </h1>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="relative mx-auto mt-6 aspect-video w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-1 backdrop-blur-xl shadow-2xl"
+          >
+            <img
+              src={getVideoUrlForVerdict(result.verdict)}
+              alt={result.verdict}
+              className="h-full w-full rounded-2xl object-cover"
+            />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
