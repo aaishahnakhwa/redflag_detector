@@ -100,12 +100,10 @@ function MemePage() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="relative mx-auto mt-8 aspect-video w-full max-w-lg overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-1 backdrop-blur-xl shadow-2xl"
             >
-              <iframe
+              <img
                 src={videoSrc}
-                title={meme.headline}
-                className="h-full w-full rounded-2xl border-0"
-                allow="autoplay"
-                allowFullScreen
+                alt={meme.headline}
+                className="h-full w-full rounded-2xl border-0 object-cover"
               />
             </motion.div>
 

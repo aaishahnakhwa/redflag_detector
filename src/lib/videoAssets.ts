@@ -1,7 +1,7 @@
 export function getVideoUrlForVerdict(verdict: string): string {
-  if (verdict === "GREEN FLAG") return "/assets/green.mp4";
-  if (verdict === "YELLOW FLAG") return "/assets/yellow.mp4";
-  return "/assets/red.mp4";
+  if (verdict === "GREEN FLAG") return "/assets/green.gif";
+  if (verdict === "YELLOW FLAG") return "/assets/yellow.gif";
+  return "/assets/red.gif";
 }
 
 export function getVideoIframeForVerdict(verdict: string): string {
