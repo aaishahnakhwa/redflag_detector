@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+/* Base Overrides & Typography */
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #020617; /* slate-950 */
+  color: #f8fafc; /* slate-50 */
+}
+
+.mono-font {
+  font-family: 'Share Tech Mono', ui-monospace, monospace;
+}
+
+.heading-font {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Glowing Neon Text Shadows */
+.glow-red {
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.6),
+               0 0 20px rgba(239, 68, 68, 0.4),
+               0 0 30px rgba(239, 68, 68, 0.2);
+}
+
+.glow-green {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.6),
+               0 0 20px rgba(34, 197, 94, 0.4),
+               0 0 30px rgba(34, 197, 94, 0.2);
+}
+
+.glow-beige {
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.6),
+               0 0 20px rgba(234, 179, 8, 0.4),
+               0 0 30px rgba(234, 179, 8, 0.2);
+}
+
+/* CRT Screen Scanline Overlay */
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-screen::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 10;
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+}
+
+/* Aurora Gradient Animations */
+@keyframes aurora-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.aurora-bg {
+  background: linear-gradient(135deg, #020617 0%, #0f172a 25%, #1e1b4b 50%, #311042 75%, #020617 100%);
+  background-size: 400% 400%;
+  animation: aurora-shift 20s ease infinite;
+}
+
+/* Floating Blob Keyframes */
+@keyframes float-blob-1 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.15);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes float-blob-2 {
+  0% {
+    transform: translate(0px, 0px) scale(1.1);
+  }
+  50% {
+    transform: translate(-40px, 40px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1.1);
+  }
+}
+
+.animate-blob-1 {
+  animation: float-blob-1 12s infinite alternate ease-in-out;
+}
+
+.animate-blob-2 {
+  animation: float-blob-2 15s infinite alternate ease-in-out;
+}
+
+.animate-blob-3 {
+  animation: float-blob-1 18s infinite alternate-reverse ease-in-out;
+}
+
+/* Custom UI Knobs & Gauges */
+.gauge-container {
+  position: relative;
+  width: 140px;
+  height: 80px;
+}
+
+.gauge-needle {
+  transform-origin: 50% 100%;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Custom Ripple Effect */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease-out, height 0.5s ease-out;
+  pointer-events: none;
+}
+
+.ripple-btn:active::after {
+  width: 300px;
+  height: 300px;
+}
